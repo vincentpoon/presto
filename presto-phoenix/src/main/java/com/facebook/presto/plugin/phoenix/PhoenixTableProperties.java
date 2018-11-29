@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.facebook.presto.spi.session.PropertyMetadata.booleanSessionProperty;
-import static com.facebook.presto.spi.session.PropertyMetadata.integerSessionProperty;
-import static com.facebook.presto.spi.session.PropertyMetadata.stringSessionProperty;
+import static com.facebook.presto.spi.session.PropertyMetadata.booleanProperty;
+import static com.facebook.presto.spi.session.PropertyMetadata.integerProperty;
+import static com.facebook.presto.spi.session.PropertyMetadata.stringProperty;
 import static com.facebook.presto.spi.type.TypeSignature.parseTypeSignature;
 import static java.util.Locale.ENGLISH;
 import static java.util.Objects.requireNonNull;
@@ -68,52 +68,52 @@ public final class PhoenixTableProperties
                                 .map(name -> ((String) name).toLowerCase(ENGLISH))
                                 .collect(Collectors.toList())),
                         value -> value),
-                integerSessionProperty(
+                integerProperty(
                         SALT_BUCKETS,
                         "numeric property causes an extra byte to be transparently prepended to every row key to ensure an evenly distributed read and write load across all region servers.",
                         null,
                         false),
-                stringSessionProperty(
+                stringProperty(
                         SPLIT_ON,
                         "Per-split table Salting does automatic table splitting but in case you want to exactly control where table split occurs with out adding extra byte or change row key order then you can pre-split a table.",
                         null,
                         false),
-                booleanSessionProperty(
+                booleanProperty(
                         DISABLE_WAL,
                         "boolean option when true causes HBase not to write data to the write-ahead-log, thus making updates faster at the expense of potentially losing data in the event of a region server failure.",
                         null,
                         false),
-                booleanSessionProperty(
+                booleanProperty(
                         IMMUTABLE_ROWS,
                         "boolean option when true declares that your table has rows which are write-once, append-only.",
                         null,
                         false),
-                stringSessionProperty(
+                stringProperty(
                         DEFAULT_COLUMN_FAMILY,
                         "string option determines the column family used used when none is specified.",
                         null,
                         false),
-                stringSessionProperty(
+                stringProperty(
                         BLOOMFILTER,
                         "NONE, ROW or ROWCOL to enable blooms per Column Family.",
                         null,
                         false),
-                integerSessionProperty(
+                integerProperty(
                         VERSIONS,
                         "The maximum number of row versions to store is configured per column family via HColumnDescriptor.",
                         null,
                         false),
-                integerSessionProperty(
+                integerProperty(
                         MIN_VERSIONS,
                         "Like maximum number of row versions, the minimum number of row versions to keep is configured per column family via HColumnDescriptor.",
                         null,
                         false),
-                stringSessionProperty(
+                stringProperty(
                         COMPRESSION,
                         "Compression is compression of HBase blocks using SNAPPY, GZIP, LZ, and others.",
                         null,
                         false),
-                integerSessionProperty(
+                integerProperty(
                         TTL,
                         "ColumnFamilies can set a TTL length in seconds, and HBase will automatically delete rows once the expiration time is reached.",
                         null,

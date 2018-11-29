@@ -25,12 +25,12 @@ import com.facebook.presto.spi.ConnectorTableLayoutHandle;
 import com.facebook.presto.spi.ConnectorTableLayoutResult;
 import com.facebook.presto.spi.ConnectorTableMetadata;
 import com.facebook.presto.spi.Constraint;
-import com.facebook.presto.spi.PrestoException;
 import com.facebook.presto.spi.SchemaTableName;
 import com.facebook.presto.spi.SchemaTablePrefix;
 import com.facebook.presto.spi.TableNotFoundException;
 import com.facebook.presto.spi.connector.ConnectorMetadata;
 import com.facebook.presto.spi.connector.ConnectorOutputMetadata;
+import com.facebook.presto.spi.statistics.ComputedStatistics;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import io.airlift.slice.Slice;
@@ -42,7 +42,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.facebook.presto.spi.StandardErrorCode.PERMISSION_DENIED;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
@@ -50,14 +49,12 @@ public class PhoenixMetadata
         implements ConnectorMetadata
 {
     private final PhoenixClient phoenixClient;
-    private final boolean allowDropTable;
 
     private final AtomicReference<Runnable> rollbackAction = new AtomicReference<>();
 
-    public PhoenixMetadata(PhoenixClient phoenixClient, boolean allowDropTable)
+    public PhoenixMetadata(PhoenixClient phoenixClient)
     {
         this.phoenixClient = requireNonNull(phoenixClient, "client is null");
-        this.allowDropTable = allowDropTable;
     }
 
     @Override
@@ -166,9 +163,6 @@ public class PhoenixMetadata
     @Override
     public void dropTable(ConnectorSession session, ConnectorTableHandle tableHandle)
     {
-        if (!allowDropTable) {
-            throw new PrestoException(PERMISSION_DENIED, "DROP TABLE is disabled in this catalog");
-        }
         PhoenixTableHandle handle = (PhoenixTableHandle) tableHandle;
         phoenixClient.dropTable(handle);
     }
@@ -182,7 +176,7 @@ public class PhoenixMetadata
     }
 
     @Override
-    public Optional<ConnectorOutputMetadata> finishCreateTable(ConnectorSession session, ConnectorOutputTableHandle tableHandle, Collection<Slice> fragments)
+    public Optional<ConnectorOutputMetadata> finishCreateTable(ConnectorSession session, ConnectorOutputTableHandle tableHandle, Collection<Slice> fragments, Collection<ComputedStatistics> computedStatistics)
     {
         clearRollback();
         return Optional.empty();
@@ -210,7 +204,7 @@ public class PhoenixMetadata
     }
 
     @Override
-    public Optional<ConnectorOutputMetadata> finishInsert(ConnectorSession session, ConnectorInsertTableHandle tableHandle, Collection<Slice> fragments)
+    public Optional<ConnectorOutputMetadata> finishInsert(ConnectorSession session, ConnectorInsertTableHandle insertHandle, Collection<Slice> fragments, Collection<ComputedStatistics> computedStatistics)
     {
         return Optional.empty();
     }

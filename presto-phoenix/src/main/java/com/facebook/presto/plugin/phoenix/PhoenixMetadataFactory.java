@@ -20,18 +20,15 @@ import static java.util.Objects.requireNonNull;
 public class PhoenixMetadataFactory
 {
     private final PhoenixClient phoenixClient;
-    private final boolean allowDropTable;
 
     @Inject
-    public PhoenixMetadataFactory(PhoenixClient phoenixClient, PhoenixMetadataConfig config)
+    public PhoenixMetadataFactory(PhoenixClient phoenixClient)
     {
         this.phoenixClient = requireNonNull(phoenixClient, "phoenixClient is null");
-        requireNonNull(config, "config is null");
-        this.allowDropTable = config.isAllowDropTable();
     }
 
     public PhoenixMetadata create()
     {
-        return new PhoenixMetadata(phoenixClient, allowDropTable);
+        return new PhoenixMetadata(phoenixClient);
     }
 }

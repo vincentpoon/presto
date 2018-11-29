@@ -335,7 +335,6 @@ public class PhoenixClient
         }
     }
 
-    @SuppressWarnings("deprecation")
     public PhoenixOutputTableHandle createTable(ConnectorTableMetadata tableMetadata)
     {
         SchemaTableName schemaTableName = tableMetadata.getTable();

@@ -22,7 +22,6 @@ import org.apache.phoenix.jdbc.PhoenixDriver;
 import java.sql.SQLException;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static io.airlift.configuration.ConfigBinder.configBinder;
 import static java.util.Objects.requireNonNull;
 
 public class PhoenixClientModule
@@ -44,7 +43,6 @@ public class PhoenixClientModule
         binder.bind(PhoenixSplitManager.class).in(Scopes.SINGLETON);
         binder.bind(PhoenixPageSourceProvider.class).in(Scopes.SINGLETON);
         binder.bind(PhoenixPageSinkProvider.class).in(Scopes.SINGLETON);
-        configBinder(binder).bindConfig(PhoenixMetadataConfig.class);
 
         binder.bind(PhoenixClient.class).in(Scopes.SINGLETON);
         binder.bind(PhoenixMetadataFactory.class).in(Scopes.SINGLETON);

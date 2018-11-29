@@ -7,31 +7,15 @@ The Phoenix connector allows querying data stored in Phoenix.
 Compatibility
 -------------
 
-Connector is compatible with all Phoenix versions starting from 4.13.x.
-
-Installation
-------------
-
-To install a pre-built phoenix, use these directions:
-
-* Download and expand the latest phoenix-[version]-bin.tar.
-* Add the phoenix-[version]-server.jar to the classpath of all HBase region server and master and remove any previous version. An easy way to do this is to copy it into the HBase lib directory.
-* Restart HBase.
-* Add Phoenix connector in Presto.
-
-Note that this uses apache hbase version. If your HBase cluster is using CDH version,
-you'll install CDH compatibility version and recompile Phoenix connector.
-You can change the version by changing the `` dep.phoenix.version`` variable in pom.xml.
-The Phoenix Connector provides a shaded jar to solve problems with versions of libraries
-such as guava and jersey in phoenix.
+The Phoenix connector is compatible with all Phoenix versions starting from 4.13.x.
 
 Configuration
 -------------
 
 To configure the Phoenix connector, create a catalog properties file
 ``etc/catalog/phoenix.properties`` with the following contents,
-replacing ``host1,host2,host3`` with a comma-separated list of the ZooKepper
-nodes used to discovery the hbase cluster:
+replacing ``host1,host2,host3`` with a comma-separated list of the ZooKeeper
+nodes used for discovery of the hbase cluster:
 
 .. code-block:: none
 
