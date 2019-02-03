@@ -98,6 +98,7 @@
         <module>presto-raptor-legacy</module>
         <module>presto-base-jdbc</module>
         <module>presto-mysql</module>
+        <module>presto-phoenix</module>
         <module>presto-postgresql</module>
         <module>presto-redshift</module>
         <module>presto-sqlserver</module>
@@ -824,6 +825,18 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-math3</artifactId>
                 <version>3.6.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.phoenix</groupId>
+                <artifactId>presto-hbase-testing-util-shaded</artifactId>
+                <version>4.14.1-HBase-1.4-PPS-0.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.phoenix</groupId>
+                <artifactId>presto-phoenix-client-shaded</artifactId>
+                <version>4.14.1-HBase-1.4-PPS-0.2</version>
             </dependency>
 
             <dependency>
